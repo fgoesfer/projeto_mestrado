@@ -18,7 +18,7 @@ c = .2
 def main(G: list):
     """ Main function that will run the cases """
     print(f"Caso: {G}")
-    case = CreateCase(hs, tz, m, c, k, k1, t, 1)
+    case = CreateCase(hs, tz, m, c, k, k1, t, 1, altered=True)
     result = {}
     aux = case.get_xt()
     result["xt"] = aux[:,0]
@@ -39,7 +39,7 @@ if __name__ == "__main__":
     g_vec = np.arange(0, 1.1, step=.1)
     results = [main(G) for G in g_vec]
     df = pd.DataFrame(data=results)
-    save_file = join("1.modelo_massa_model", "dabase_g_cases.pkl")
+    save_file = join("1.modelo_massa_model", "dabase_g_cases_alterated.pkl")
     df.to_pickle(save_file)
 # %%
 

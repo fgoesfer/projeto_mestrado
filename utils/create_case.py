@@ -16,7 +16,7 @@ def rungekutta4(f, y0, t, args=()):
     return y
 
 class CreateCase:
-    def __init__(self, hs, tz, m, c, k, k1, t, G,):
+    def __init__(self, hs, tz, m, c, k, k1, t, G, altered=False):
         self.hs = hs
         self.tz = tz
         self.m = m
@@ -25,10 +25,10 @@ class CreateCase:
         self.c = c
         self.G = G
         self.w = np.arange(0.01, 2, .001)
+        self.altered = altered
         self.s_eta = self.get_s_eta()
         self.t = t
         self.yt = self.get_yt(t)
-
         self.interpolador = interp1d(t, 
                                      self.yt, 
                                      bounds_error=False,
@@ -51,7 +51,10 @@ class CreateCase:
         ang = vec * self.w
         phi = np.random.uniform(high=2*np.pi, size=ang.shape)
         c = np.sqrt(2 * s * dw)
-        result = c * np.cos(ang + phi) + self.G * c**2
+        if self.altered:
+            result = c * np.cos(ang + phi) + self.G * self.hs**2
+        else:
+            result = c * np.cos(ang + phi) + self.G * c**2
         return np.sum(result, axis=1)
     
     def get_xt(self):
