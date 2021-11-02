@@ -9,7 +9,7 @@ from utils.create_case import CreateCase
 # Inputs
 hs = 7.8
 tz = 11.8
-t = np.arange(0, 3 * 3600, .125)
+t = np.arange(0, 3 * 3600, .1)
 m = .05
 k = 2
 k1 = 0.3
@@ -18,7 +18,7 @@ c = .2
 def main(G: list):
     """ Main function that will run the cases """
     print(f"Caso: {G}")
-    case = CreateCase(hs, tz, m, c, k, k1, t, 1, altered=False)
+    case = CreateCase(hs, tz, m, c, k, k1, t, G, altered=False)
     result = {}
     aux = case.get_xt()
     result["xt"] = aux[:,0]
@@ -36,10 +36,11 @@ def main(G: list):
 
 if __name__ == "__main__":
     # Run cases to run
-    g_vec = np.arange(0, 5, step=.5)
+    g_vec = np.linspace(0, 1, 5)
     results = [main(G) for G in g_vec]
     df = pd.DataFrame(data=results)
-    save_file = join(r"F:\User\Documents\trabalho_mestrado\1.modelo_massa_mola", "dabase_g_cases_alterated.pkl")
+    save_file = join(r"F:\User\Documents\trabalho_mestrado\1.modelo_massa_mola", 
+                     "dabase_g_cases_v2.pkl")
     df.to_pickle(save_file)
 # %%
 

@@ -54,7 +54,10 @@ class CreateCase:
         if self.altered:
             result = c * np.cos(ang + phi) + self.G * self.hs**2
         else:
-            result = c * np.cos(ang + phi) + self.G * c**2
+            result = c * np.cos(ang + phi)
+            aux = np.ones((result.shape[0], 1))
+            result += aux * self.G * c**2
+            
         return np.sum(result, axis=1)
     
     def get_xt(self):
